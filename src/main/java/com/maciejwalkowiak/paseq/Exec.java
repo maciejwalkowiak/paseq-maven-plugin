@@ -1,23 +1,30 @@
 package com.maciejwalkowiak.paseq;
 
+import org.jetbrains.annotations.Nullable;
+
 public class Exec {
     private String command;
-    private String directory;
+    private @Nullable String directory;
+
+    // public no-arg constructor is required by maven
+    public Exec() {
+    }
+
+    Exec(String command) {
+        this(command, null);
+    }
+
+    public Exec(String command, @Nullable String directory) {
+        this.command = command;
+        this.directory = directory;
+    }
 
     public String getCommand() {
         return command;
     }
 
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
-    public String getDirectory() {
+    public @Nullable String getDirectory() {
         return directory;
-    }
-
-    public void setDirectory(String directory) {
-        this.directory = directory;
     }
 
     @Override public String toString() {
@@ -25,5 +32,9 @@ public class Exec {
                 "command='" + command + '\'' +
                 ", directory='" + directory + '\'' +
                 '}';
+    }
+
+    String toLoggableString() {
+        return command + (directory != null ? " in directory: " + directory : "");
     }
 }

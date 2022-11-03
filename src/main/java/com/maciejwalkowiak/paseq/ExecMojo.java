@@ -1,16 +1,5 @@
 package com.maciejwalkowiak.paseq;
 
-import org.apache.maven.plugin.AbstractMojo;
-
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
-import org.apache.maven.plugins.annotations.Mojo;
-import org.apache.maven.plugins.annotations.Parameter;
-import org.apache.maven.shared.invoker.DefaultInvocationRequest;
-import org.apache.maven.shared.invoker.InvocationRequest;
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.invoker.MavenInvocationException;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,11 +7,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
+
 /**
- * Goal which touches a timestamp file.
+ * Executes series of tasks.
  */
-@Mojo(name = "run", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
-public class RunMojo extends AbstractMojo {
+@Mojo(name = "exec")
+public class ExecMojo extends AbstractMojo {
 
     @Parameter(property = "tasks")
     private Task[] tasks;
@@ -30,7 +28,24 @@ public class RunMojo extends AbstractMojo {
     @Component
     protected Invoker invoker;
 
+    // public no-arg constructor is required by maven
+    public ExecMojo() {
+    }
+
+    ExecMojo(List<Task> tasks, Invoker invoker) {
+        this.tasks = tasks.toArray(new Task[]{});
+        this.invoker = invoker;
+    }
+
     public void execute() {
+        // validate
+        try {
+            Arrays.stream(tasks).forEach(Task::validate);
+        } catch (InvalidTaskDefinitionException e) {
+            getLog().error(e.getMessage());
+            throw e;
+        }
+
         List<CompletableFuture<?>> futures = new ArrayList<>();
 
         for (Task task : tasks) {
@@ -48,16 +63,16 @@ public class RunMojo extends AbstractMojo {
         waitAndClear(futures);
     }
 
-    void runAndLog(Task task) {
-        getLog().info("Started " + task.getExecution() + " invocation of " + task);
+    private void runAndLog(Task task) {
+        getLog().info("Started invocation of " + task.toLoggableString());
         run(task);
-        getLog().info("Finished " + task.getExecution() + " invocation of " + task);
+        getLog().info("Finished invocation of " + task.toLoggableString());
     }
 
-    void run(Task task) {
-        if (task.getGoals() != null && task.getGoals().length > 0) {
+    private void run(Task task) {
+        if (task.hasGoals()) {
             invoke(toInvocationRequest(task));
-        } else if (task.getExec() != null && task.getExec().getCommand() != null) {
+        } else if (task.getExec() != null && task.hasCommand()) {
             try {
                 ProcessBuilder processBuilder = new ProcessBuilder();
                 Exec exec = task.getExec();
