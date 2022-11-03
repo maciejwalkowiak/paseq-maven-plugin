@@ -1,3 +1,3 @@
 # Paseq Maven Plugin
 
-![docs/logo.png]
+![Logo](docs/logo.png)
