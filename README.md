@@ -2,6 +2,8 @@
 
 ![Logo](docs/logo.png)
 
+by [@maciejwalkowiak](https://twitter.com/maciejwalkowiak)
+
 Paseq Maven Plugin executes series of commands or Maven goals sequentially or in parallel.
 
 **Warning**: early stage of development. Not yet in Maven Central. Feedback very welcome!
