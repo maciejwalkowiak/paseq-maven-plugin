@@ -14,33 +14,37 @@ Plugin has to be configured in `build/plugins` section of `pom.xml`:
 
 ```xml
 <build>
-    <plugin>
-        <groupId>com.maciejwalkowiak.paseq</groupId>
-        <artifactId>paseq-maven-plugin</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
-        <configuration>
-            <tasks>
-                <!-- runs docker-compose from 'etc' directory relative to pom.xml -->
-                <task>
-                    <exec>
-                        <directory>etc</directory>
-                        <command>docker-compose up -d --wait</command>
-                    </exec>
-                </task>
-                <!-- runs npx in a background process -->
-                <task>
-                    <async>true</async>
-                    <exec>
-                        <command>npx run develop</command>
-                    </exec>
-                </task>
-                <!-- runs spring-boot:run after previous sync task finishes -->
-                <task>
-                    <goals>spring-boot:run</goals>
-                </task>
-            </tasks>
-        </configuration>
-    </plugin>
+    <plugins>
+        <!-- ... -->
+        <plugin>
+            <groupId>com.maciejwalkowiak.paseq</groupId>
+            <artifactId>paseq-maven-plugin</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+            <configuration>
+                <tasks>
+                    <!-- runs docker-compose from 'etc' directory relative to pom.xml -->
+                    <task>
+                        <exec>
+                            <directory>etc</directory>
+                            <command>docker-compose up -d --wait</command>
+                        </exec>
+                    </task>
+                    <!-- runs npx in a background process -->
+                    <task>
+                        <async>true</async>
+                        <exec>
+                            <command>npx run develop</command>
+                        </exec>
+                    </task>
+                    <!-- runs spring-boot:run after previous sync task finishes -->
+                    <task>
+                        <goals>spring-boot:run</goals>
+                    </task>
+                </tasks>
+            </configuration>
+        </plugin>
+        <!-- ... -->
+    </plugins>
 </build>
 ```
 
