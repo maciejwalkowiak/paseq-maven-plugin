@@ -58,3 +58,6 @@ $ mvn paseq:exec
 - `exec` - executable run in a separate process. Must have `command` configured, and optionally can have `directory` which sets the directory in which the command gets executed
 - `async` - if task should be executed in the background thread. By default `false`
 - `wait` - if task should wait for all async tasks started before
+
+---
+<a href="https://www.flaticon.com/free-icons/belt" title="belt icons">Belt icons created by Freepik - Flaticon</a>
