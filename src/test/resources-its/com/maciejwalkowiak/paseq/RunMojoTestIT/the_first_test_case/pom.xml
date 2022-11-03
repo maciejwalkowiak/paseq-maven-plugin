@@ -17,8 +17,8 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.maciejwalkowiak.jetspeed</groupId>
-				<artifactId>jetspeed-maven-plugin</artifactId>
+				<groupId>com.maciejwalkowiak.paseq</groupId>
+				<artifactId>paseq-maven-plugin</artifactId>
 				<version>0.1.0-SNAPSHOT</version>
 				<configuration>
 					<tasks>
