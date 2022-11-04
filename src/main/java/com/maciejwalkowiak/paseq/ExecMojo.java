@@ -1,12 +1,12 @@
 package com.maciejwalkowiak.paseq;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -79,9 +79,7 @@ public class ExecMojo extends AbstractMojo {
                 if (exec.getDirectory() != null) {
                     processBuilder.directory(new File(exec.getDirectory()));
                 }
-                Process process = processBuilder.command(exec.getCommand().split(" "))
-                        .inheritIO()
-                        .start();
+                Process process = processBuilder.command(exec.getCommand().split(" ")).inheritIO().start();
                 process.waitFor();
                 process.destroy();
             } catch (IOException | InterruptedException e) {
@@ -94,7 +92,7 @@ public class ExecMojo extends AbstractMojo {
 
     private void waitAndClear(List<CompletableFuture<?>> futures) {
         if (!futures.isEmpty()) {
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[] {})).join();
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[]{})).join();
             futures.clear();
         }
     }

@@ -1,5 +1,6 @@
 package com.maciejwalkowiak.paseq;
 
+
 import org.jetbrains.annotations.Nullable;
 
 public class TaskBuilder {

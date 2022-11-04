@@ -1,17 +1,16 @@
 package com.maciejwalkowiak.paseq;
 
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import org.junit.jupiter.api.Test;
 
 class TaskTests {
 
     @Test
     void throwsExceptionWhenTaskDoesNotHaveGoalNorCommand() {
         var task = new Task();
-        assertThatThrownBy(task::validate)
-                .isInstanceOf(InvalidTaskDefinitionException.class);
+        assertThatThrownBy(task::validate).isInstanceOf(InvalidTaskDefinitionException.class);
     }
 
     @Test
@@ -29,8 +28,6 @@ class TaskTests {
     @Test
     void throwsExceptionWhenTaskHasBothGoalsAndCommand() {
         var task = Task.withGoals("clean").setExec(new Exec("ls -l")).build();
-        assertThatThrownBy(task::validate)
-                .isInstanceOf(InvalidTaskDefinitionException.class);
+        assertThatThrownBy(task::validate).isInstanceOf(InvalidTaskDefinitionException.class);
     }
-
 }

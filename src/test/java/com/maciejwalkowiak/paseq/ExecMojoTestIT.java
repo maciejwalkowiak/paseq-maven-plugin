@@ -1,11 +1,11 @@
 package com.maciejwalkowiak.paseq;
 
+import static com.soebes.itf.extension.assertj.MavenITAssertions.assertThat;
+
 import com.soebes.itf.jupiter.extension.MavenGoal;
 import com.soebes.itf.jupiter.extension.MavenJupiterExtension;
 import com.soebes.itf.jupiter.extension.MavenTest;
 import com.soebes.itf.jupiter.maven.MavenExecutionResult;
-
-import static com.soebes.itf.extension.assertj.MavenITAssertions.assertThat;
 
 @MavenJupiterExtension
 public class ExecMojoTestIT {
@@ -17,4 +17,3 @@ public class ExecMojoTestIT {
     }
 
 }
-

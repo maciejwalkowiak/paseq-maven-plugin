@@ -1,18 +1,17 @@
 package com.maciejwalkowiak.paseq;
 
-import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.apache.maven.shared.invoker.Invoker;
-import org.apache.maven.shared.invoker.MavenInvocationException;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.Collections;
+import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
+import org.junit.jupiter.api.Test;
 
 class ExecMojoTests {
 
