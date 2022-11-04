@@ -13,6 +13,11 @@ import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Unit tests for {@link ExecMojo}.
+ *
+ * @author Maciej Walkowiak
+ */
 class ExecMojoTests {
 
     private final Invoker invoker = mock(Invoker.class);

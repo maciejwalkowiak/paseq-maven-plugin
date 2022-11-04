@@ -7,6 +7,11 @@ import com.soebes.itf.jupiter.extension.MavenJupiterExtension;
 import com.soebes.itf.jupiter.extension.MavenTest;
 import com.soebes.itf.jupiter.maven.MavenExecutionResult;
 
+/**
+ * Integration tests for {@link ExecMojo}.
+ *
+ * @author Maciej Walkowiak
+ */
 @MavenJupiterExtension
 public class ExecMojoTestIT {
 

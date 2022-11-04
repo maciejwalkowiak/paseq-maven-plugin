@@ -3,8 +3,20 @@ package com.maciejwalkowiak.paseq;
 
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Configuration for executing a command.
+ *
+ * @author Maciej Walkowiak
+ */
 public class Exec {
+    /**
+     * Command to execute.
+     */
     private String command;
+
+    /**
+     * Directory from which the command is meant to be executed.
+     */
     private @Nullable String directory;
 
     // public no-arg constructor is required by maven

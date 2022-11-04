@@ -5,6 +5,11 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for {@link Task}.
+ *
+ * @author Maciej Walkowiak
+ */
 class TaskTests {
 
     @Test

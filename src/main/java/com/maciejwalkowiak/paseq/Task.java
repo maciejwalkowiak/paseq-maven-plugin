@@ -4,10 +4,31 @@ package com.maciejwalkowiak.paseq;
 import java.util.Arrays;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Defines a task. Either {@link #goals} {@link #exec} can be defined on a
+ * single task.
+ *
+ * @author Maciej Walkowiak
+ */
 public class Task {
+    /**
+     * If task is executed in a background thread.
+     */
     private boolean async;
+
+    /**
+     * If task should wait for all previously started async tasks to finish.
+     */
     private boolean wait;
+
+    /**
+     * Maven goals to run in this task.
+     */
     private @Nullable String[] goals;
+
+    /**
+     * Configuration for the command to run in this task.
+     */
     private @Nullable Exec exec;
 
     // public no-arg constructor is required by maven
@@ -33,6 +54,12 @@ public class Task {
         this.exec = exec;
     }
 
+    /**
+     * Checks if task is in valid state.
+     *
+     * @throws InvalidTaskDefinitionException
+     *             when task is not in valid state.
+     */
     public void validate() {
         if (!hasGoals() && !hasCommand()) {
             throw new InvalidTaskDefinitionException("Either `goals` or `command` must be set on a task");

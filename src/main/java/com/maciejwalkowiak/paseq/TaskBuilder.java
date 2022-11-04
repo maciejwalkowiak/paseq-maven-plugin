@@ -3,6 +3,11 @@ package com.maciejwalkowiak.paseq;
 
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Builder for {@link Task}. Meant to be used mainly in tests.
+ *
+ * @author Maciej Walkowiak
+ */
 public class TaskBuilder {
     private boolean async;
     private boolean wait;
