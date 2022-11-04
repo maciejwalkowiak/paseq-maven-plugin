@@ -244,6 +244,7 @@
                   <armored>true</armored>
                 </signing>
                 <deploy>
+
                   <maven>
                     <nexus2>
                       <maven-central>
