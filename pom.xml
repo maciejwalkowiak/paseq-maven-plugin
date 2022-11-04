@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -259,8 +257,9 @@
                       <maven-central>
                         <active>ALWAYS</active>
                         <url>https://s01.oss.sonatype.org/service/local</url>;
-                        <closeRepository>true</closeRepository>
-                        <releaseRepository>true</releaseRepository>
+                        <!-- for now close and release manually -->
+                        <closeRepository>false</closeRepository>
+                        <releaseRepository>false</releaseRepository>
                         <stagingRepositories>target/staging-deploy</stagingRepositories>
                       </maven-central>
                     </nexus2>
@@ -268,6 +267,14 @@
                 </deploy>
               </jreleaser>
             </configuration>
+            <!-- workaround for https://github.com/jreleaser/jreleaser/issues/1012 -->
+            <dependencies>
+              <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.11.0</version>
+              </dependency>
+            </dependencies>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
