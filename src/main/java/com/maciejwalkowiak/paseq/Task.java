@@ -1,7 +1,7 @@
 package com.maciejwalkowiak.paseq;
 
-import java.util.Arrays;
 
+import java.util.Arrays;
 import org.jetbrains.annotations.Nullable;
 
 public class Task {
@@ -14,7 +14,7 @@ public class Task {
     public Task() {
     }
 
-    static TaskBuilder withGoals(String ... goals) {
+    static TaskBuilder withGoals(String... goals) {
         return new TaskBuilder().setGoals(goals);
     }
 
@@ -73,18 +73,15 @@ public class Task {
         } else if (hasCommand()) {
             loggableString = exec.toLoggableString();
         } else {
-            throw new RuntimeException("Task is invalid state. Looks like a bug in task validation. You must set either task goals or the command");
+            throw new RuntimeException(
+                    "Task is invalid state. Looks like a bug in task validation. You must set either task goals or the command");
         }
         return loggableString + " (" + (async ? "async" : "sync") + ")";
     }
 
-    @Override public String toString() {
-        return "Task{" +
-                "async=" + async +
-                ", wait=" + wait +
-                ", goals=" + Arrays.toString(goals) +
-                ", exec=" + exec +
-                '}';
+    @Override
+    public String toString() {
+        return "Task{" + "async=" + async + ", wait=" + wait + ", goals=" + Arrays.toString(goals) + ", exec=" + exec
+                + '}';
     }
 }
-

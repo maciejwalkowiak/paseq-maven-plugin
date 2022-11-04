@@ -1,5 +1,6 @@
 package com.maciejwalkowiak.paseq;
 
+
 import org.jetbrains.annotations.Nullable;
 
 public class Exec {
@@ -27,11 +28,9 @@ public class Exec {
         return directory;
     }
 
-    @Override public String toString() {
-        return "Exec{" +
-                "command='" + command + '\'' +
-                ", directory='" + directory + '\'' +
-                '}';
+    @Override
+    public String toString() {
+        return "Exec{" + "command='" + command + '\'' + ", directory='" + directory + '\'' + '}';
     }
 
     String toLoggableString() {
