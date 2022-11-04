@@ -16,9 +16,9 @@ import com.soebes.itf.jupiter.maven.MavenExecutionResult;
 public class ExecMojoTestIT {
 
     @MavenGoal("${project.groupId}:${project.artifactId}:${project.version}:exec")
-    @MavenTest // <2>
-    void the_first_test_case(MavenExecutionResult result) { // <3>
-        assertThat(result).isSuccessful(); // <4>
+    @MavenTest
+    void the_first_test_case(MavenExecutionResult result) {
+        assertThat(result).isSuccessful();
     }
 
 }
