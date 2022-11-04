@@ -9,12 +9,22 @@
   <artifactId>paseq-maven-plugin</artifactId>
   <version>0.1.0</version>
   <packaging>maven-plugin</packaging>
-
   <name>Paseq Maven Plugin</name>
-
+  <description>Maven Plugin for running Maven goals and commands sequentially or in parallel</description>
   <prerequisites>
     <maven>${maven.version}</maven>
   </prerequisites>
+
+  <url>https://github.com/maciejwalkowiak/paseq-maven-plugin/</url>
+  <scm>
+    <url>https://github.com/maciejwalkowiak/paseq-maven-plugin</url>
+    <connection>scm:git:git://github.com/maciejwalkowiak/paseq-maven-plugin.git
+    </connection>
+    <developerConnection>
+      scm:git:ssh://git@github.com/maciejwalkowiak/paseq-maven-plugin.git
+    </developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -244,7 +254,6 @@
                   <armored>true</armored>
                 </signing>
                 <deploy>
-
                   <maven>
                     <nexus2>
                       <maven-central>
