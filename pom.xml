@@ -251,6 +251,10 @@
                 <arg>--pinentry-mode</arg>
                 <arg>loopback</arg>
               </gpgArguments>
+              <configuration>
+                <keyname>${OSSRH_GPG_SECRET_KEY}</keyname>
+                <passphraseServerId>${OSSRH_GPG_SECRET_KEY}</passphraseServerId>
+              </configuration>
             </configuration>
           </plugin>
           <plugin>
