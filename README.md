@@ -6,8 +6,6 @@ by [@maciejwalkowiak](https://twitter.com/maciejwalkowiak)
 
 Paseq Maven Plugin executes series of commands or Maven goals sequentially or in parallel.
 
-**Warning**: early stage of development. Not yet in Maven Central. Feedback very welcome!
-
 ## Example
 
 Plugin has to be configured in `build/plugins` section of `pom.xml`:
@@ -19,7 +17,7 @@ Plugin has to be configured in `build/plugins` section of `pom.xml`:
         <plugin>
             <groupId>com.maciejwalkowiak.paseq</groupId>
             <artifactId>paseq-maven-plugin</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
             <configuration>
                 <tasks>
                     <!-- runs docker-compose from 'etc' directory relative to pom.xml -->
@@ -64,4 +62,4 @@ $ mvn paseq:exec
 - `wait` - if task should wait for all async tasks started before
 
 ---
-<a href="https://www.flaticon.com/free-icons/belt" title="belt icons">Belt icons created by Freepik - Flaticon</a>
+[Belt icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/belt)
