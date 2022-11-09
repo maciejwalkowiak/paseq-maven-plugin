@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.InvocationResult;
 import org.apache.maven.shared.invoker.Invoker;
 import org.apache.maven.shared.invoker.MavenInvocationException;
 
@@ -37,7 +40,7 @@ public class ExecMojo extends AbstractMojo {
         this.invoker = invoker;
     }
 
-    public void execute() {
+    public void execute() throws MojoExecutionException {
         // validate
         try {
             Arrays.stream(tasks).forEach(Task::validate);
@@ -51,7 +54,11 @@ public class ExecMojo extends AbstractMojo {
         for (Task task : tasks) {
             if (task.isAsync()) {
                 futures.add(CompletableFuture.runAsync(() -> {
-                    runAndLog(task);
+                    try {
+                        runAndLog(task);
+                    } catch (MojoExecutionException e) {
+                        throw new CompletionException(e);
+                    }
                 }));
             } else {
                 if (task.isWait()) {
@@ -63,13 +70,13 @@ public class ExecMojo extends AbstractMojo {
         waitAndClear(futures);
     }
 
-    private void runAndLog(Task task) {
+    private void runAndLog(Task task) throws MojoExecutionException {
         getLog().info("Started invocation of " + task.toLoggableString());
         run(task);
         getLog().info("Finished invocation of " + task.toLoggableString());
     }
 
-    private void run(Task task) {
+    private void run(Task task) throws MojoExecutionException {
         if (task.hasGoals()) {
             invoke(toInvocationRequest(task));
         } else if (task.getExec() != null && task.hasCommand()) {
@@ -80,8 +87,12 @@ public class ExecMojo extends AbstractMojo {
                     processBuilder.directory(new File(exec.getDirectory()));
                 }
                 Process process = processBuilder.command(exec.getCommand().split(" ")).inheritIO().start();
-                process.waitFor();
+                int result = process.waitFor();
                 process.destroy();
+
+                if (result != 0) {
+                    throw new MojoExecutionException("Running task " + task + " finished with a exit code " + result);
+                }
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -90,18 +101,31 @@ public class ExecMojo extends AbstractMojo {
         }
     }
 
-    private void waitAndClear(List<CompletableFuture<?>> futures) {
+    private void waitAndClear(List<CompletableFuture<?>> futures) throws MojoExecutionException {
         if (!futures.isEmpty()) {
-            CompletableFuture.allOf(futures.toArray(new CompletableFuture[]{})).join();
+            for (CompletableFuture<?> future : futures) {
+                try {
+                    future.join();
+                } catch (CompletionException e) {
+                    if (e.getCause() instanceof MojoExecutionException) {
+                        throw (MojoExecutionException) e.getCause();
+                    } else {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
             futures.clear();
         }
     }
 
-    private void invoke(InvocationRequest invocationRequest) {
+    private void invoke(InvocationRequest invocationRequest) throws MojoExecutionException {
         try {
-            invoker.execute(invocationRequest);
+            InvocationResult result = invoker.execute(invocationRequest);
+            if (result.getExitCode() != 0 || result.getExecutionException() != null) {
+                throw new MojoExecutionException(result.getExecutionException());
+            }
         } catch (MavenInvocationException e) {
-            throw new RuntimeException(e);
+            throw new MojoExecutionException(e);
         }
     }
 
