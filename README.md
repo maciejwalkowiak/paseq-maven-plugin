@@ -17,7 +17,7 @@ Plugin has to be configured in `build/plugins` section of `pom.xml`:
         <plugin>
             <groupId>com.maciejwalkowiak.paseq</groupId>
             <artifactId>paseq-maven-plugin</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
             <configuration>
                 <tasks>
                     <!-- runs docker-compose from 'etc' directory relative to pom.xml -->
